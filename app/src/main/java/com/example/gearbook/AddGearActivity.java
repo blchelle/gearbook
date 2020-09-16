@@ -30,6 +30,7 @@ public class AddGearActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_gear);
 
+        // Find each of the significant form items
         editTextMaker = findViewById(R.id.editTextMaker);
         editTextPrice = findViewById(R.id.editTextPrice);
         editTextDescription = findViewById(R.id.editTextDescription);
@@ -39,7 +40,14 @@ public class AddGearActivity extends AppCompatActivity {
         editTextComment = findViewById(R.id.editTextComment);
         buttonAddGear = findViewById(R.id.buttonAddGear);
 
+        // Add a listener to each of the text fields
+        // This is so that the button can determine if it should be enabled
         editTextMaker.addTextChangedListener(this.textWatcher);
+        editTextPrice.addTextChangedListener(this.textWatcher);
+        editTextDescription.addTextChangedListener(this.textWatcher);
+        editTextDateYear.addTextChangedListener(this.textWatcher);
+        editTextDateMonth.addTextChangedListener(this.textWatcher);
+        editTextDateDay.addTextChangedListener(this.textWatcher);
     }
 
     private TextWatcher textWatcher = new TextWatcher() {
@@ -50,8 +58,7 @@ public class AddGearActivity extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            buttonAddGear.setEnabled(!editTextMaker.getText().toString().trim().isEmpty());
-            buttonAddGear.setClickable(!editTextMaker.getText().toString().trim().isEmpty());
+            buttonAddGear.setEnabled(checkTextViewsForContent());
         }
 
         @Override
@@ -60,13 +67,28 @@ public class AddGearActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Checks to see if each of the required text fields have content
+     * @return True if each of the text fields have content, False otherwise
+     */
+    private boolean checkTextViewsForContent() {
+        boolean maker = !editTextMaker.getText().toString().trim().isEmpty();
+        boolean price = !editTextPrice.getText().toString().trim().isEmpty();
+        boolean description = !editTextDescription.getText().toString().trim().isEmpty();
+        boolean year = !editTextDateYear.getText().toString().trim().isEmpty();
+        boolean month = !editTextDateMonth.getText().toString().trim().isEmpty();
+        boolean day = !editTextDateDay.getText().toString().trim().isEmpty();
+
+        return maker && price && description && year && month && day;
+    }
+
     public void handleOnAddGearButtonClick(View view) {
         String maker = editTextMaker.getText().toString().trim();
         Float price = Float.parseFloat(editTextPrice.getText().toString().trim());
         String description = editTextDescription.getText().toString().trim();
-        Integer year = Integer.parseInt(editTextDateYear.getText().toString().trim());
-        Integer month = Integer.parseInt(editTextDateMonth.getText().toString().trim());
-        Integer day = Integer.parseInt(editTextDateDay.getText().toString().trim());
+        int year = Integer.parseInt(editTextDateYear.getText().toString().trim());
+        int month = Integer.parseInt(editTextDateMonth.getText().toString().trim());
+        int day = Integer.parseInt(editTextDateDay.getText().toString().trim());
         String comment = editTextComment.getText().toString().trim();
 
         Date date = new GregorianCalendar(year, month, day).getTime();
