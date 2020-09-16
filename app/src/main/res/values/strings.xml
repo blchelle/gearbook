@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">GearBook</string>
+    <string name="add_gear_prompt">Enter the details for your new gear below</string>
+    <string name="text_view_maker_hint">Maker</string>
+    <string name="text_view_price_hint">Price</string>
+    <string name="text_view_description_hint">Description (Max 40 Characters)</string>
+    <string name="text_view_date_prompt">Date:</string>
+    <string name="text_view_date_separator">-</string>
+    <string name="text_view_date_years_hint">YYYY</string>
+    <string name="text_view_date_months_hint">MM</string>
+    <string name="text_view_date_days_hint">DD</string>
+    <string name="text_view_comment_hint">Comment (Max 20 Characters)</string>
+    <string name="button_add_gear_text">Add Gear</string>
 </resources>

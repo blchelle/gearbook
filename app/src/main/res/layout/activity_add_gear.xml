@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddGearActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="32dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_horizontal"
+            android:text="@string/add_gear_prompt"
+            android:textSize="18sp"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/editTextMaker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:ems="20"
+                    android:inputType="text"
+                    android:hint="@string/text_view_maker_hint"
+                    android:autofillHints="@string/text_view_maker_hint"/>
+
+                <EditText
+                    android:id="@+id/editTextPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="numberDecimal"
+                    android:drawableLeft="@drawable/ic_baseline_attach_money_24"
+                    android:drawableStart="@drawable/ic_baseline_attach_money_24"
+                    android:drawablePadding="2dp"
+                    android:hint="@string/text_view_price_hint"
+                    android:autofillHints="@string/text_view_price_hint"/>
+
+            </LinearLayout>
+
+        <EditText
+            android:id="@+id/editTextDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:hint="@string/text_view_description_hint"
+            android:autofillHints="@string/text_view_description_hint"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/text_view_date_prompt"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/editTextDateYear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/text_view_date_years_hint"
+                android:autofillHints="@string/text_view_date_years_hint"
+                android:inputType="date"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_view_date_separator"
+                android:textSize="24sp"
+                android:layout_marginRight="4dp"
+                android:layout_marginLeft="4dp" />
+
+            <EditText
+                android:id="@+id/editTextDateMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/text_view_date_months_hint"
+                android:autofillHints="@string/text_view_date_months_hint"
+                android:inputType="date"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_view_date_separator"
+                android:textSize="24sp"
+                android:layout_marginRight="4dp"
+                android:layout_marginLeft="4dp" />
+
+            <EditText
+                android:id="@+id/editTextDateDay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/text_view_date_days_hint"
+                android:autofillHints="@string/text_view_date_days_hint"
+                android:inputType="date"/>
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/editTextComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_view_comment_hint"
+            android:autofillHints="@string/text_view_comment_hint"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/buttonAddGear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/submit_button"
+            android:enabled="false"
+            android:foreground="?attr/selectableItemBackground"
+            android:onClick="handleOnAddGearButtonClick"
+            android:text="@string/button_add_gear_text"
+            android:textColor="@color/colorButtonText"
+            android:textSize="20sp" />
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
