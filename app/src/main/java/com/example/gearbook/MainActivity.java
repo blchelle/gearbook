@@ -27,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         allGear = new ArrayList<>();
-        allGear.add(new Gear(new Date(), "Brock", "lala", (float) 45.0));
-        allGear.add(new Gear(new Date(), "Bork", "hahd alkj l ioo lorem ipsum lala hjjhj", (float) 4520.0, "This is a good"));
+//        allGear.add(new Gear(new Date(), "Brock", "lala", (float) 45.0));
+//        allGear.add(new Gear(new Date(), "Bork", "hahd alkj l ioo lorem ipsum lala hjjhj", (float) 4520.0, "This is a good"));
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerViewGears);
         recyclerView.setHasFixedSize(true);
@@ -39,6 +39,12 @@ public class MainActivity extends AppCompatActivity {
         adapter = new GearAdapter(allGear);
         recyclerView.setAdapter(adapter);
 
+    }
+
+    public void deleteItem(View view) {
+        int index = recyclerView.getChildLayoutPosition((View) view.getParent().getParent());
+        allGear.remove(index);
+        adapter.notifyItemRemoved(index);
     }
 
     public void onAddItemButtonClick(View view) {
