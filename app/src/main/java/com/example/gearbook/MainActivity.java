@@ -2,6 +2,8 @@ package com.example.gearbook;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +11,13 @@ import android.view.View;
 import android.widget.EditText;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     private ArrayList<Gear> allGear;
 
@@ -20,6 +27,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         allGear = new ArrayList<>();
+        allGear.add(new Gear(new Date(), "Brock", "lala", (float) 45.0));
+        allGear.add(new Gear(new Date(), "Bork", "hahd alkj l ioo lorem ipsum lala hjjhj", (float) 4520.0, "This is a good"));
+
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewGears);
+        recyclerView.setHasFixedSize(true);
+
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        adapter = new GearAdapter(allGear);
+        recyclerView.setAdapter(adapter);
+
     }
 
     public void onAddItemButtonClick(View view) {
