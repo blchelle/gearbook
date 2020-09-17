@@ -3,6 +3,7 @@ package com.example.gearbook;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -61,6 +62,7 @@ public class GearAdapter extends RecyclerView.Adapter<GearAdapter.GearViewHolder
         public TextView gearDate;
         public TextView gearComment;
         public TextView gearPrice;
+        public ImageButton deleteGearButton;
 
         public GearViewHolder(View itemView) {
             super(itemView);
@@ -70,6 +72,7 @@ public class GearAdapter extends RecyclerView.Adapter<GearAdapter.GearViewHolder
             gearDate = (TextView) itemView.findViewById(R.id.gearCardTextViewDate);
             gearComment = (TextView) itemView.findViewById(R.id.gearCardTextViewComment);
             gearPrice = (TextView) itemView.findViewById(R.id.gearCardTextViewPrice);
+            deleteGearButton = (ImageButton) itemView.findViewById(R.id.buttonDeleteGear);
         }
     }
 
