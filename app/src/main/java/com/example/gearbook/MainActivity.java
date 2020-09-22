@@ -51,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void launchEditItemActivity(View view) {
+        // The parent of the edit button is the vertical linear layout holding that and the edit button
+        // The parent of that element is the horizontal linear layout holding the content of the card
+        // The parent of that element is the card element, that is the element that we want
         CardView cardToBeEdited = (CardView) view.getParent().getParent().getParent();
         int gearIndex = recyclerView.getChildLayoutPosition(cardToBeEdited);
 
