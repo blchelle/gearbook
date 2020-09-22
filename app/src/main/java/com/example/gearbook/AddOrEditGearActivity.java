@@ -10,25 +10,33 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
-public class AddGearActivity extends AppCompatActivity {
+/**
+ * This class is reused for both adding and editing gear
+ * If it is used for editing then the info for the gear being edited will be passed as an intent
+ * If it is used for adding no additional info will be passed in the intent
+ */
+public class AddOrEditGearActivity extends AppCompatActivity {
 
     private EditText editTextMaker;
     private EditText editTextPrice;
     private EditText editTextDescription;
+    private EditText editTextComment;
+    private Button buttonAddGear;
+
+    // The Year, Month and Day of Month have their own text fields
     private EditText editTextDateYear;
     private EditText editTextDateMonth;
     private EditText editTextDateDay;
-    private EditText editTextComment;
-    private Button buttonAddGear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_gear);
+        setContentView(R.layout.activity_add_or_edit_gear);
 
         // Find each of the significant form items
         editTextMaker = findViewById(R.id.editTextMaker);
@@ -40,6 +48,32 @@ public class AddGearActivity extends AppCompatActivity {
         editTextComment = findViewById(R.id.editTextComment);
         buttonAddGear = findViewById(R.id.buttonAddGear);
 
+        // If some gear was passed with the intent, then that means that the
+        // activity will be used for editing
+        Gear gear = getIntent().getParcelableExtra("GEAR");
+        if (gear != null) {
+            // If the code has entered here, then we know we are editing some gear
+            // So we should pre-fill all the fields with the gear's information
+
+            editTextMaker.setText(gear.getMaker());
+            editTextDescription.setText(gear.getDescription());
+            editTextPrice.setText(gear.getPrice().toString());
+            editTextComment.setText(gear.getComment());
+
+            // Extract the Year, Month and Date from the gear's date
+            Date gearDate = gear.getDate();
+            Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("MST"));
+            calendar.setTime(gearDate);
+
+            // Convert the gear date to YYYY-MM-DD format
+            editTextDateYear.setText(String.format("%04d", calendar.get(Calendar.YEAR)));
+            editTextDateMonth.setText(String.format("%02d", calendar.get(Calendar.MONTH)));
+            editTextDateDay.setText(String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH)));
+
+            // Change the button text to show that the activity is in 'edit' mode
+            buttonAddGear.setText("Confirm Changes");
+        }
+
         // Add a listener to each of the text fields
         // This is so that the button can determine if it should be enabled
         editTextMaker.addTextChangedListener(this.textWatcher);
@@ -48,13 +82,12 @@ public class AddGearActivity extends AppCompatActivity {
         editTextDateYear.addTextChangedListener(this.textWatcher);
         editTextDateMonth.addTextChangedListener(this.textWatcher);
         editTextDateDay.addTextChangedListener(this.textWatcher);
+        editTextComment.addTextChangedListener(this.textWatcher);
     }
 
     private TextWatcher textWatcher = new TextWatcher() {
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -62,9 +95,7 @@ public class AddGearActivity extends AppCompatActivity {
         }
 
         @Override
-        public void afterTextChanged(Editable s) {
-
-        }
+        public void afterTextChanged(Editable s) {}
     };
 
     /**
@@ -102,7 +133,15 @@ public class AddGearActivity extends AppCompatActivity {
         }
 
         Intent resultIntent = new Intent();
-        resultIntent.putExtra("NEW_GEAR", newGear);
+        resultIntent.putExtra("GEAR", newGear);
+
+        // If the intent passed an index, then we know that we are editing some gear and we
+        // need to pass the index back so that the main activity knows which gear to replace
+        int index = getIntent().getIntExtra("GEAR_INDEX", -1);
+        if (index != -1) {
+            resultIntent.putExtra("GEAR_INDEX", index);
+        }
+
         setResult(RESULT_OK, resultIntent);
         finish();
     }
