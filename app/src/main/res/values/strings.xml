@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GearBook</string>
+    <string name="app_name">bchelle-GearBook</string>
     <string name="add_gear_prompt">Enter the details for your new gear below</string>
     <string name="text_view_maker_hint">Maker</string>
     <string name="text_view_price_hint">Price</string>

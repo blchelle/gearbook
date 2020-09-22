@@ -2,13 +2,13 @@ package com.example.gearbook;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         allGear = new ArrayList<>();
-//        allGear.add(new Gear(new Date(), "Brock", "lala", (float) 45.0));
-//        allGear.add(new Gear(new Date(), "Bork", "hahd alkj l ioo lorem ipsum lala hjjhj", (float) 4520.0, "This is a good"));
+        allGear.add(new Gear(new Date(), "Brock", "lala", (float) 45.0));
+        allGear.add(new Gear(new Date(), "Bork", "hahd alkj l ioo lorem ipsum lala hjjhj", (float) 4520.0, "This is a good"));
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerViewGears);
         recyclerView.setHasFixedSize(true);
@@ -42,13 +42,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void deleteItem(View view) {
-        int index = recyclerView.getChildLayoutPosition((View) view.getParent().getParent());
+        // The parent of the delete button is the vertical linear layout holding that and the edit button
+        // The parent of that element is the horizontal linear layout holding the content of the card
+        // The parent of that element is the card element, that is the element that we want
+        int index = recyclerView.getChildLayoutPosition((View) view.getParent().getParent().getParent());
         allGear.remove(index);
         adapter.notifyItemRemoved(index);
     }
 
+    public void launchEditItemActivity(View view) {
+        CardView cardToBeEdited = (CardView) view.getParent().getParent().getParent();
+        int gearIndex = recyclerView.getChildLayoutPosition(cardToBeEdited);
+
+        Intent intent = new Intent(this, AddOrEditGearActivity.class);
+        intent.putExtra("GEAR", allGear.get(gearIndex));
+        intent.putExtra("GEAR_INDEX", gearIndex);
+        startActivityForResult(intent, 2);
+    }
+
     public void onAddItemButtonClick(View view) {
-        Intent intent = new Intent(this, AddGearActivity.class);
+        Intent intent = new Intent(this, AddOrEditGearActivity.class);
         startActivityForResult(intent, 1);
     }
 
@@ -59,8 +72,18 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 assert data != null;
-                Gear newGear = data.getParcelableExtra("NEW_GEAR");
+                Gear newGear = data.getParcelableExtra("GEAR");
                 allGear.add(newGear);
+                adapter.notifyDataSetChanged();
+            }
+        }
+        else if (requestCode == 2) {
+            if (resultCode == RESULT_OK) {
+                assert data != null;
+                Gear modifiedGear = data.getParcelableExtra("GEAR");
+                int gearIndex = data.getIntExtra("GEAR_INDEX", 0);
+                allGear.set(gearIndex, modifiedGear);
+                adapter.notifyDataSetChanged();
             }
         }
     }
