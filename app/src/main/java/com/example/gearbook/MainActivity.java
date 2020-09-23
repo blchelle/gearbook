@@ -17,20 +17,13 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    private GearAdapter adapter;
     private TextView textViewTotalPrice;
-
-    private ArrayList<Gear> allGear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        allGear = new ArrayList<>();
-
-        textViewTotalPrice = findViewById(R.id.text_view_total_price);
-        textViewTotalPrice.setText("Total Price: $"+Float.toString(sumGearPrices()));
 
         recyclerView = findViewById(R.id.recycle_view_gears);
         recyclerView.setHasFixedSize(true);
@@ -38,14 +31,16 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new GearAdapter(allGear);
+        adapter = new GearAdapter(new ArrayList<Gear>());
         recyclerView.setAdapter(adapter);
 
+        textViewTotalPrice = findViewById(R.id.text_view_total_price);
+        textViewTotalPrice.setText("Total Price: $"+String.format("%.2f", sumGearPrices()));
     }
 
     private float sumGearPrices() {
         float sum = 0;
-        for (Gear gear: this.allGear) { sum += gear.getPrice(); }
+        for (Gear gear: this.adapter.getGears()) { sum += gear.getPrice(); }
         return sum;
     }
 
@@ -54,11 +49,11 @@ public class MainActivity extends AppCompatActivity {
         // The parent of that element is the horizontal linear layout holding the content of the card
         // The parent of that element is the card element, that is the element that we want
         int index = recyclerView.getChildLayoutPosition((View) view.getParent().getParent().getParent());
-        allGear.remove(index);
+        this.adapter.removeGear(index);
         adapter.notifyItemRemoved(index);
 
         // Update the price
-        textViewTotalPrice.setText("Total Price: $"+Float.toString(sumGearPrices()));
+        textViewTotalPrice.setText("Total Price: $"+String.format("%.2f", sumGearPrices()));
     }
 
     public void launchEditItemActivity(View view) {
@@ -68,13 +63,17 @@ public class MainActivity extends AppCompatActivity {
         CardView cardToBeEdited = (CardView) view.getParent().getParent().getParent();
         int gearIndex = recyclerView.getChildLayoutPosition(cardToBeEdited);
 
+        // Launch the AddOrEditGearActivity class with the request code 2
+        // The request code 2 indicates that it will edit an existing gear rather than adding one
         Intent intent = new Intent(this, AddOrEditGearActivity.class);
-        intent.putExtra("GEAR", allGear.get(gearIndex));
+        intent.putExtra("GEAR", adapter.getGears().get(gearIndex));
         intent.putExtra("GEAR_INDEX", gearIndex);
         startActivityForResult(intent, 2);
     }
 
-    public void onAddItemButtonClick(View view) {
+    public void launchAddItemActivity(View view) {
+        // Launch the AddOrEditGearActivity class with the request code 1
+        // The request code 1 indicates that it will add new gear rather than editing one
         Intent intent = new Intent(this, AddOrEditGearActivity.class);
         startActivityForResult(intent, 1);
     }
@@ -87,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 assert data != null;
                 Gear newGear = data.getParcelableExtra("GEAR");
-                allGear.add(newGear);
+                adapter.addGear(newGear);
                 adapter.notifyDataSetChanged();
             }
         }
@@ -95,13 +94,16 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 assert data != null;
                 Gear modifiedGear = data.getParcelableExtra("GEAR");
-                int gearIndex = data.getIntExtra("GEAR_INDEX", 0);
-                allGear.set(gearIndex, modifiedGear);
-                adapter.notifyDataSetChanged();
+
+                if (modifiedGear != null) {
+                    int gearIndex = data.getIntExtra("GEAR_INDEX", 0);
+                    adapter.modifyGear(gearIndex, modifiedGear);
+                    adapter.notifyDataSetChanged();
+                }
             }
         }
 
         // Update the price
-        textViewTotalPrice.setText("Total Price: $"+Float.toString(sumGearPrices()));
+        textViewTotalPrice.setText("Total Price: $"+String.format("%.2f", sumGearPrices()));
     }
 }

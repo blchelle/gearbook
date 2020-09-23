@@ -16,10 +16,10 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class GearAdapter extends RecyclerView.Adapter<GearAdapter.GearViewHolder> {
-    private ArrayList<Gear> dataSet;
+    private ArrayList<Gear> gears;
 
-    public GearAdapter(ArrayList<Gear> dataSet) {
-        this.dataSet = dataSet;
+    public GearAdapter(ArrayList<Gear> gears) {
+        this.gears = gears;
     }
 
     @Override
@@ -28,26 +28,46 @@ public class GearAdapter extends RecyclerView.Adapter<GearAdapter.GearViewHolder
         return new GearViewHolder(card);
     }
 
+    public ArrayList<Gear> getGears() {
+        return gears;
+    }
+
+    public void setGears(ArrayList<Gear> gears) {
+        this.gears = gears;
+    }
+
+    public void addGear(Gear gear) {
+        this.gears.add(gear);
+    }
+
+    public void removeGear(int index) {
+        this.gears.remove(index);
+    }
+
+    public void modifyGear(int index, Gear modifiedGear) {
+        this.gears.set(index, modifiedGear);
+    }
+
     @Override
     public void onBindViewHolder(GearViewHolder holder, int position) {
-        holder.gearMaker.setText(dataSet.get(position).getMaker());
-        holder.gearDescription.setText(dataSet.get(position).getDescription());
+        holder.gearMaker.setText(gears.get(position).getMaker());
+        holder.gearDescription.setText(gears.get(position).getDescription());
 
-        String price = "$" + dataSet.get(position).getPrice().toString();
+        String price = "$" + gears.get(position).getPrice().toString();
         holder.gearPrice.setText(price);
 
         DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd", Locale.CANADA);
-        String date = dateFormat.format(dataSet.get(position).getDate());
+        String date = dateFormat.format(gears.get(position).getDate());
         holder.gearDate.setText(date);
 
         // Get the comment, if it is null then write an empty string instead
-        String comment = dataSet.get(position).getComment();
+        String comment = gears.get(position).getComment();
         holder.gearComment.setText(comment != null ? comment : "");
     }
 
     @Override
     public int getItemCount() {
-        return dataSet.size();
+        return gears.size();
     }
 
     @Override

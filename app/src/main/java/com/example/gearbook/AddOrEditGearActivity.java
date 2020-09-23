@@ -1,11 +1,14 @@
 package com.example.gearbook;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -85,6 +88,7 @@ public class AddOrEditGearActivity extends AppCompatActivity {
         editTextDateMonth.addTextChangedListener(this.textWatcher);
         editTextDateDay.addTextChangedListener(this.textWatcher);
         editTextComment.addTextChangedListener(this.textWatcher);
+
     }
 
     private TextWatcher textWatcher = new TextWatcher() {
@@ -174,5 +178,16 @@ public class AddOrEditGearActivity extends AppCompatActivity {
 
         setResult(RESULT_OK, resultIntent);
         finish();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            Intent resultIntent = new Intent();
+            setResult(RESULT_CANCELED, resultIntent);
+            finish();
+        }
+
+        return true;
     }
 }
