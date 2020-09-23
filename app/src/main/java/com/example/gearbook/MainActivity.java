@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
+    private TextView textViewTotalPrice;
 
     private ArrayList<Gear> allGear;
 
@@ -27,18 +28,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         allGear = new ArrayList<>();
-        allGear.add(new Gear(new Date(), "Brock", "lala", (float) 45.0));
-        allGear.add(new Gear(new Date(), "Bork", "hahd alkj l ioo lorem ipsum lala hjjhj", (float) 4520.0, "This is a good"));
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewGears);
+        textViewTotalPrice = findViewById(R.id.text_view_total_price);
+        textViewTotalPrice.setText("Total Price: $"+Float.toString(sumGearPrices()));
+
+        recyclerView = findViewById(R.id.recycle_view_gears);
         recyclerView.setHasFixedSize(true);
 
-        layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
         adapter = new GearAdapter(allGear);
         recyclerView.setAdapter(adapter);
 
+    }
+
+    private float sumGearPrices() {
+        float sum = 0;
+        for (Gear gear: this.allGear) { sum += gear.getPrice(); }
+        return sum;
     }
 
     public void deleteItem(View view) {
@@ -48,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
         int index = recyclerView.getChildLayoutPosition((View) view.getParent().getParent().getParent());
         allGear.remove(index);
         adapter.notifyItemRemoved(index);
+
+        // Update the price
+        textViewTotalPrice.setText("Total Price: $"+Float.toString(sumGearPrices()));
     }
 
     public void launchEditItemActivity(View view) {
@@ -89,5 +100,8 @@ public class MainActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
         }
+
+        // Update the price
+        textViewTotalPrice.setText("Total Price: $"+Float.toString(sumGearPrices()));
     }
 }

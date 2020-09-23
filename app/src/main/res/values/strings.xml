@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">bchelle-GearBook</string>
+    <string name="text_view_total_price_default">You Have No Gear!</string>
     <string name="add_gear_prompt">Enter the details for your gear below</string>
     <string name="text_input_maker_hint">Maker</string>
     <string name="text_input_price_hint">Price</string>

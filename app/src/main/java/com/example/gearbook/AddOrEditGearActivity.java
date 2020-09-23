@@ -120,6 +120,8 @@ public class AddOrEditGearActivity extends AppCompatActivity {
                     editTextPrice.setSelection(editTextPrice.getText().toString().length());
                 }
             }
+
+            buttonAddGear.setEnabled(checkTextViewsForContent());
         }
 
         @Override
