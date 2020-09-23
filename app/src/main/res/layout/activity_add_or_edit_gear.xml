@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="32dp">
-
+        
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,47 +25,69 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/editTextMaker"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+            
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:ems="20"
-                    android:inputType="text"
-                    android:hint="@string/text_view_maker_hint"
-                    android:autofillHints="@string/text_view_maker_hint"/>
-
-                <EditText
-                    android:id="@+id/editTextPrice"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
+                    app:errorEnabled="true"
+                    app:counterEnabled="true"
+                    android:hint="@string/text_input_maker_hint"
+                    app:counterMaxLength="20"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    >
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/text_input_gear_maker"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:maxLength="20"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                app:errorEnabled="true"
+                app:errorContentDescription="Price must be formatted as ..."
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/text_input_gear_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/text_input_price_hint"
                     android:inputType="numberDecimal"
-                    android:drawableLeft="@drawable/ic_baseline_attach_money_24"
-                    android:drawableStart="@drawable/ic_baseline_attach_money_24"
-                    android:drawablePadding="2dp"
-                    android:hint="@string/text_view_price_hint"
-                    android:autofillHints="@string/text_view_price_hint"/>
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            </LinearLayout>
+        </LinearLayout>
 
-        <EditText
-            android:id="@+id/editTextDescription"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:hint="@string/text_view_description_hint"
-            android:autofillHints="@string/text_view_description_hint"/>
+            android:hint="@string/text_input_description_hint"
+            app:counterMaxLength="40"
+            app:counterEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/text_input_gear_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="40"
+                android:inputType="textMultiLine"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:layout_marginBottom="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -75,13 +97,24 @@
                 android:text="@string/text_view_date_prompt"
                 android:textSize="20sp"/>
 
-            <EditText
-                android:id="@+id/editTextDateYear"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="@string/text_view_date_years_hint"
-                android:autofillHints="@string/text_view_date_years_hint"
-                android:inputType="date"/>
+                android:hint="@string/text_input_date_years_hint"
+                app:counterMaxLength="4"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/text_input_gear_date_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="43dp"
+                    android:gravity="center_horizontal"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:ems="4"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -91,13 +124,23 @@
                 android:layout_marginRight="4dp"
                 android:layout_marginLeft="4dp" />
 
-            <EditText
-                android:id="@+id/editTextDateMonth"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="@string/text_view_date_months_hint"
-                android:autofillHints="@string/text_view_date_months_hint"
-                android:inputType="date"/>
+                android:hint="@string/text_input_date_months_hint"
+                app:counterMaxLength="2"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/text_input_gear_date_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="43dp"
+                    android:gravity="center_horizontal"
+                    android:inputType="number"
+                    android:maxLength="2"
+                    android:ems="3"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -107,37 +150,56 @@
                 android:layout_marginRight="4dp"
                 android:layout_marginLeft="4dp" />
 
-            <EditText
-                android:id="@+id/editTextDateDay"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="@string/text_view_date_days_hint"
-                android:autofillHints="@string/text_view_date_days_hint"
-                android:inputType="date"/>
+                app:counterMaxLength="2"
+                android:hint="@string/text_input_date_days_hint"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/text_input_gear_date_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="43dp"
+                    android:gravity="center_horizontal"
+                    android:maxLength="2"
+                    android:inputType="number"
+                    android:ems="3"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/editTextComment"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/text_view_comment_hint"
-            android:autofillHints="@string/text_view_comment_hint"
-            android:inputType="text" />
+            app:errorEnabled="true"
+            app:counterEnabled="true"
+            android:hint="@string/text_input_comment_hint"
+            app:counterMaxLength="20"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/text_input_gear_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLength="20"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/buttonAddGear"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_add_or_edit_gear"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="16dp"
+            style="@style/TextAppearance.MaterialComponents.Button"
+            android:gravity="center_horizontal|center_vertical"
             android:background="@drawable/submit_button"
             android:enabled="false"
-            android:foreground="?attr/selectableItemBackground"
             android:onClick="handleOnAddGearButtonClick"
             android:text="@string/button_add_gear_text"
             android:textColor="@color/colorButtonText"
             android:textSize="20sp" />
-
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
