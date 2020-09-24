@@ -23,6 +23,10 @@ import java.util.TimeZone;
  * This class is reused for both adding and editing gear
  * If it is used for editing then the info for the gear being edited will be passed as an intent
  * If it is used for adding no additional info will be passed in the intent
+ *
+ * Initially when I was creating activities for adding and editing items, I noticed they were
+ * about 95% similar and used mostly the same code. So the rationale for this class was to combine
+ * the two functionalities into one activity that can do both with a minimal amount of added code.
  */
 public class AddOrEditGearActivity extends AppCompatActivity {
 
@@ -90,6 +94,11 @@ public class AddOrEditGearActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Watches the text for all text fields (except price). After each text change it
+     * determines if the input is valid. If all inputs are valid, then the confirm button
+     * will become enabled.
+     */
     private TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -103,8 +112,13 @@ public class AddOrEditGearActivity extends AppCompatActivity {
         public void afterTextChanged(Editable s) {}
     };
 
-    // https://stackoverflow.com/questions/5107901/better-way-to-format-currency-input-edittext/8275680
-    // distributed under CC BY-SA 2.5
+    /**
+     * Watches the price text field to correctly format the input and determine if the confirm
+     * button should become enabled
+     *
+     * Source: https://stackoverflow.com/questions/5107901/better-way-to-format-currency-input-edittext/8275680
+     * License: distributed under CC BY-SA 2.5
+    */
     private TextWatcher priceTextWatcher = new TextWatcher() {
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
 
@@ -146,17 +160,23 @@ public class AddOrEditGearActivity extends AppCompatActivity {
         return maker && price && description && year && month && day;
     }
 
+    /**
+     * Handles the user clicking the confirm/add button
+     * @param view The confirm/add button
+     */
     public void confirmChanges(View view) {
+        // Get the inputs from each of the text fields
         String maker = editTextMaker.getText().toString().trim();
         Float price = Float.parseFloat(editTextPrice.getText().toString().trim().substring(1));
         String description = editTextDescription.getText().toString().trim();
+        String comment = editTextComment.getText().toString().trim();
+
         int year = Integer.parseInt(editTextDateYear.getText().toString().trim());
         int month = Integer.parseInt(editTextDateMonth.getText().toString().trim()) - 1;
         int day = Integer.parseInt(editTextDateDay.getText().toString().trim());
-        String comment = editTextComment.getText().toString().trim();
-
         Date date = new GregorianCalendar(year, month, day).getTime();
 
+        // Creates the new gear object with the given inputs
         Gear newGear;
         if (comment.isEmpty()) {
             newGear = new Gear(date, maker, description, price);
@@ -165,6 +185,7 @@ public class AddOrEditGearActivity extends AppCompatActivity {
             newGear = new Gear(date, maker, description, price, comment);
         }
 
+        // Create an intents and attach the gear object to it
         Intent resultIntent = new Intent();
         resultIntent.putExtra("GEAR", newGear);
 
@@ -175,10 +196,15 @@ public class AddOrEditGearActivity extends AppCompatActivity {
             resultIntent.putExtra("GEAR_INDEX", index);
         }
 
+        // Exit the activity
         setResult(RESULT_OK, resultIntent);
         finish();
     }
 
+    /**
+     * When the user navigates back to the MainActivity, we need to send a signal that the
+     * activity was cancelled and not completed successfully
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
