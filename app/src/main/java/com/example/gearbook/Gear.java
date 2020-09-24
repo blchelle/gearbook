@@ -5,6 +5,14 @@ import android.os.Parcelable;
 
 import java.util.Date;
 
+/**
+ * The purpose of this class is to provide a model for the users Gear
+ * Gear must have a date, maker, description, price, and comment
+ * This class provides getters and setters to all of those properties
+ *
+ * This class implements the  Parcelable interface so that any Gear object could be passed
+ * between activities. This kind of transfer is performed when adding or editing gear
+ */
 public class Gear implements Parcelable {
     private Date date;
     private String maker;

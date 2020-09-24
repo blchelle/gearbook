@@ -15,6 +15,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
+/**
+ * The purpose of this class is to create an adapter for the Gear Class so that Gear objects
+ * can abe rendered dynamically on the Main Activity
+ *
+ * The rationale for this class is that I needed a custom adapter in order to perform some
+ * specific functionalities for the gear card, such as displaying all of the gears properties
+ * and correctly formatting them.
+ */
 public class GearAdapter extends RecyclerView.Adapter<GearAdapter.GearViewHolder> {
     private ArrayList<Gear> gears;
 
