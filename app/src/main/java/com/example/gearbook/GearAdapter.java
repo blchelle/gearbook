@@ -32,10 +32,6 @@ public class GearAdapter extends RecyclerView.Adapter<GearAdapter.GearViewHolder
         return gears;
     }
 
-    public void setGears(ArrayList<Gear> gears) {
-        this.gears = gears;
-    }
-
     public void addGear(Gear gear) {
         this.gears.add(gear);
     }

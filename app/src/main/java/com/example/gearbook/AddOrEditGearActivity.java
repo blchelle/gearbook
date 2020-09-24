@@ -1,6 +1,5 @@
 package com.example.gearbook;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,7 +30,7 @@ public class AddOrEditGearActivity extends AppCompatActivity {
     private TextInputEditText editTextPrice;
     private TextInputEditText editTextDescription;
     private TextInputEditText editTextComment;
-    private Button buttonAddGear;
+    private Button buttonConfirm;
 
     // The Year, Month and Day of Month have their own text fields
     private TextInputEditText editTextDateYear;
@@ -51,7 +50,7 @@ public class AddOrEditGearActivity extends AppCompatActivity {
         editTextDateMonth = findViewById(R.id.text_input_gear_date_month);
         editTextDateDay = findViewById(R.id.text_input_gear_date_day);
         editTextComment = findViewById(R.id.text_input_gear_comment);
-        buttonAddGear = findViewById(R.id.button_add_or_edit_gear);
+        buttonConfirm = findViewById(R.id.button_add_or_edit_gear);
 
         // If some gear was passed with the intent, then that means that the
         // activity will be used for editing
@@ -76,7 +75,7 @@ public class AddOrEditGearActivity extends AppCompatActivity {
             editTextDateDay.setText(String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH) + 1));
 
             // Change the button text to show that the activity is in 'edit' mode
-            buttonAddGear.setText("Confirm Changes");
+            buttonConfirm.setText("Confirm Changes");
         }
 
         // Add a listener to each of the text fields
@@ -97,14 +96,14 @@ public class AddOrEditGearActivity extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            buttonAddGear.setEnabled(checkTextViewsForContent());
+            buttonConfirm.setEnabled(checkTextViewsForContent());
         }
 
         @Override
         public void afterTextChanged(Editable s) {}
     };
 
-    //https://stackoverflow.com/questions/5107901/better-way-to-format-currency-input-edittext/8275680
+    // https://stackoverflow.com/questions/5107901/better-way-to-format-currency-input-edittext/8275680
     // distributed under CC BY-SA 2.5
     private TextWatcher priceTextWatcher = new TextWatcher() {
         DecimalFormat decimalFormat = new DecimalFormat("0.00");
@@ -125,7 +124,7 @@ public class AddOrEditGearActivity extends AppCompatActivity {
                 }
             }
 
-            buttonAddGear.setEnabled(checkTextViewsForContent());
+            buttonConfirm.setEnabled(checkTextViewsForContent());
         }
 
         @Override
@@ -147,7 +146,7 @@ public class AddOrEditGearActivity extends AppCompatActivity {
         return maker && price && description && year && month && day;
     }
 
-    public void handleOnAddGearButtonClick(View view) {
+    public void confirmChanges(View view) {
         String maker = editTextMaker.getText().toString().trim();
         Float price = Float.parseFloat(editTextPrice.getText().toString().trim().substring(1));
         String description = editTextDescription.getText().toString().trim();
