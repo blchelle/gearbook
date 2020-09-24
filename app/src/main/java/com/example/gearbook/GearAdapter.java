@@ -53,7 +53,7 @@ public class GearAdapter extends RecyclerView.Adapter<GearAdapter.GearViewHolder
         holder.gearMaker.setText(gears.get(position).getMaker());
         holder.gearDescription.setText(gears.get(position).getDescription());
 
-        String price = "$" + gears.get(position).getPrice().toString();
+        String price = "$" + String.format("%.2f", gears.get(position).getPrice());
         holder.gearPrice.setText(price);
 
         DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd", Locale.CANADA);

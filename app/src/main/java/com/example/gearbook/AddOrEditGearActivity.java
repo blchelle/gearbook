@@ -62,7 +62,7 @@ public class AddOrEditGearActivity extends AppCompatActivity {
 
             editTextMaker.setText(gear.getMaker());
             editTextDescription.setText(gear.getDescription());
-            editTextPrice.setText(gear.getPrice().toString());
+            editTextPrice.setText("$" + String.format("%.2f", gear.getPrice()));
             editTextComment.setText(gear.getComment());
 
             // Extract the Year, Month and Date from the gear's date
@@ -72,8 +72,8 @@ public class AddOrEditGearActivity extends AppCompatActivity {
 
             // Convert the gear date to YYYY-MM-DD format
             editTextDateYear.setText(String.format("%04d", calendar.get(Calendar.YEAR)));
-            editTextDateMonth.setText(String.format("%02d", calendar.get(Calendar.MONTH + 1)));
-            editTextDateDay.setText(String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH)));
+            editTextDateMonth.setText(String.format("%02d", calendar.get(Calendar.MONTH) +  1));
+            editTextDateDay.setText(String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH) + 1));
 
             // Change the button text to show that the activity is in 'edit' mode
             buttonAddGear.setText("Confirm Changes");
